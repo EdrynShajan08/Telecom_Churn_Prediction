@@ -3,14 +3,17 @@ from flask import Flask, request, jsonify, render_template
 import pickle
 
 app = Flask(__name__)
-path=r'C:\\Users\\AIDEN SAMUEL\\PycharmProjects\\Pythonproject1\model_churn.pkl'
+path = r'D:\dep5\Telecom_Churn_Prediction\model_churn.pkl'
 model = pickle.load(open(path, 'rb'))
-#Churn_pred
+# Churn_pred
+
+
 @app.route('/')
 def home():
     return render_template('Churn_pred.html')
 
-@app.route('/predict',methods=['POST'])
+
+@app.route('/predict', methods=['POST'])
 def predict():
     '''
     For rendering results on HTML GUI
@@ -20,10 +23,10 @@ def predict():
     prediction = model.predict(final_features)
 
     output = round(prediction[0], 2)
-    if output>0.5:
-        output='A Churn case'
+    if output > 0.5:
+        output = 'A Churn case'
     else:
-        output='Not A Churn case'
+        output = 'Not A Churn case'
     return render_template('Churn_pred.html', prediction_text='This case is  {}'.format(output))
 
 
